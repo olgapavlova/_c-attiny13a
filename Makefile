@@ -28,7 +28,7 @@ all: docker-run
 # Цели для обслуживания Docker
 # ─────────────────────────────────────
 docker-build:
-	docker build -t $(DOCKER_IMAGE):$(DOCKER_TAG) .
+	sudo docker build -t $(DOCKER_IMAGE):$(DOCKER_TAG) .
 
 
 # ─────────────────────────────────────
@@ -50,7 +50,7 @@ $(HEX): $(ELF)
 	$(OBJCOPY) -O ihex -R .eeprom $< $@
 
 flash: $(HEX)
-	sudo avrdude -c usbasp -p t13 -U flash:w:$(HEX)
+	avrdude -c usbasp -p t13 -U flash:w:$(HEX)
 
 
 docker-run:
@@ -59,6 +59,7 @@ docker-run:
 		-e HOST_UID=$$(id -u) \
 		-e HOST_GID=$$(id -g) \
 		$(DOCKER_IMAGE):$(DOCKER_TAG) $(MAKE) compile
+
 
 # ─────────────────────────────────────
 # Служебные цели 
