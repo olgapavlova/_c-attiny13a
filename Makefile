@@ -50,7 +50,7 @@ $(HEX): $(ELF)
 	$(OBJCOPY) -O ihex -R .eeprom $< $@
 
 flash: $(HEX)
-	avrdude -c usbasp -p t13 -U flash:w:$(HEX)
+	sudo avrdude -c usbasp -p t13 -U flash:w:$(HEX)
 
 
 docker-run:
